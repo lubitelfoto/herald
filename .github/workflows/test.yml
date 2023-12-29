@@ -6,31 +6,31 @@ on:
   pull_request:
     branches: [master]
 
-  jobs:
-    test:
-      name: ${{ matrix.os }}, py-${{ matrix.python-version }}
-      runs-on: ${{ matrix.os }}
-      strategy:
-        fail-fast: true
-        matrix:
-          os: [ubuntu-latest]
-          python-version: ["3.10"]
-      defaults:
-        run:
-          shell: bash
-      steps:
-        - uses: actions/checkout@v4
+jobs:
+  test:
+    name: ${{ matrix.os }}, py-${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.10"]
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
 
-        - name: Setup Python
-          uses: actions/setup-python@v4
-          with:
-            python-version: ${{ matrix.python-version }}
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
 
-        - name: Install Poetry
-          uses: snokinstall-poetry2v1
-          with:
-            virtualenvs-create: true
-            virtualenvs-in-project: true
+      - name: Install Poetry
+        uses: snokinstall-poetry2v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
 
-        - name: Install dependencies
-          run: poetry install --no-iteraction --no-root
+      - name: Install dependencies
+        run: poetry install --no-iteraction --no-root
