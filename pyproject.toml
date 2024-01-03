@@ -13,6 +13,8 @@ pandas = "^2.1.4"
 plotly = "5.18.0"
 attrs = "^23.2.0"
 dvc = {extras = ["gdrive"], version = "^3.37.0"}
+lightning = "2.1"
+torch = "^2.1.2"
 
 
 [build-system]
