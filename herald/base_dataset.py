@@ -45,7 +45,7 @@ class BaseDataset:
     # Доделать нормально дату
     def data_preparation(self) -> DataFrame:
         p = Path.cwd()
-        data_path = p.parent.joinpath("data/")
+        data_path = p.joinpath("data/")
         dataframes_dict = {}
         for file in data_path.rglob(f"*{self.day_of_month}.csv"):
             if file.is_file():
