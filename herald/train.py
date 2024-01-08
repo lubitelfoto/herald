@@ -2,7 +2,6 @@ import hydra
 from omegaconf import DictConfig, OmegaConf
 from sklearn import linear_model
 from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.model_selection import train_test_split
 
 from base_dataset import BaseDataset
 
@@ -11,10 +10,7 @@ from base_dataset import BaseDataset
 def train(cfg: DictConfig):
     params = OmegaConf.to_container(cfg["params"])
     data = BaseDataset(29)
-    X, y = data.get_Xy()
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.33, random_state=42, shuffle=False
-    )
+    X_train, X_test, y_train, y_test = data.get_train_test()
     model = linear_model.Ridge(**params)
     model.fit(X_train.reshape(-1, X_train.shape[1] * X_train.shape[2]), y_train)
     pred = model.predict(X_test.reshape(-1, X_test.shape[1] * X_test.shape[2]))

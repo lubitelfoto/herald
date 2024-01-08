@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import torch
 from pandas import DataFrame, Series
+from sklearn.model_selection import train_test_split
 from torch.utils.data import DataLoader, Dataset
 
 
@@ -81,3 +82,7 @@ class BaseDataset:
         X = np.array(X)
         y = np.array(y)
         return X, y
+
+    def get_train_test(self):
+        X, y = self.get_Xy()
+        return train_test_split(X, y, test_size=0.33, random_state=42, shuffle=False)
