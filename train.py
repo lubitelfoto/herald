@@ -1,9 +1,8 @@
 import hydra
+from base_dataset import BaseDataset
 from omegaconf import DictConfig, OmegaConf
 from sklearn import linear_model
 from sklearn.metrics import mean_squared_error, r2_score
-
-from base_dataset import BaseDataset
 
 
 @hydra.main(version_base=None, config_path="config", config_name="config")
