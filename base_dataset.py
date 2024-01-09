@@ -29,7 +29,7 @@ class BaseDataset:
         self.day_of_month = day_of_month
         self.merged_df = self.data_preparation()
 
-    def data_processing(self, path: Path, pair_name: str = "") -> DataFrame:
+    def get_df(self, path: Path, pair_name: str = "") -> DataFrame:
         col_for_drop = ["side", "trade_id", "trade_time"]
         df = pd.read_csv(path)
         df.trade_time = pd.to_datetime(df.trade_time, unit="ms")
@@ -43,7 +43,7 @@ class BaseDataset:
         )
         return df
 
-    # Доделать нормально дату
+    # Add date picker or process everything
     def data_preparation(self) -> DataFrame:
         p = Path.cwd()
         data_path = p.joinpath("data/")
@@ -51,7 +51,7 @@ class BaseDataset:
         for file in data_path.rglob(f"*{self.day_of_month}.csv"):
             if file.is_file():
                 pair_name = file.name[: file.name.find("USDT") + 4]
-                dataframes_dict[pair_name] = self.data_processing(file, pair_name)
+                dataframes_dict[pair_name] = self.get_df(file, pair_name)
         merged_df = dataframes_dict["BTCUSDT"]  # Start with one DataFrame
         for key, df in dataframes_dict.items():
             if key != "BTCUSDT":  # Skip the first DataFrame
