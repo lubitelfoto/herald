@@ -16,16 +16,16 @@ def train(cfg: DictConfig):
     X_train, y_train = data.get_Xy()
     model = linear_model.Ridge(**params)
     model.fit(X_train.reshape(-1, X_train.shape[1] * X_train.shape[2]), y_train)
-
-    # pred = model.predict(X_test.reshape(-1, X_test.shape[1] * X_test.shape[2]))
-    # print(f"mse:{mean_squared_error(y_test, pred)} r2_score: {r2_score(y_test, pred)}")
-
     initial_type = [
         ("float_input", FloatTensorType([None, X_train.shape[1] * X_train.shape[2]]))
     ]
     onnx_model = convert_sklearn(model, initial_types=initial_type)
     with open("models/model.onnx", "wb") as f:
         f.write(onnx_model.SerializeToString())
+    f.close()
+
+    # Пушить модель через апи пока не получилось
+    # fs.repo.push()
 
 
 if __name__ == "__main__":
