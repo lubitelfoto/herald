@@ -15,6 +15,7 @@ def infer():
     input_name = sess.get_inputs()[0].name
     input_data = {input_name: X.reshape(-1, X.shape[1] * X.shape[2])}
     pred = sess.run(None, input_data)[0]
+    np.savetxt("infer_output/output.csv", pred, delimiter=",", fmt="%f")
     print(f"infer mse:{mean_squared_error(y, pred)} r2_score: {r2_score(y, pred)}")
 
 
